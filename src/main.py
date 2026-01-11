@@ -19,6 +19,7 @@ def load_items():
             return []
 
 
+#functie pentru salvarea articolelor in fisier
 def save_items(items):
     """Salvează lista de articole în fișierul JSON."""
     os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
