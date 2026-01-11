@@ -6,6 +6,7 @@ import sys
 DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "shopping_list.json")
 
 
+#functie pentru incarcarea articolelor din fisier
 def load_items():
     """Citește lista de articole din fișierul JSON. Dacă nu există, întoarce listă goală."""
     if not os.path.exists(DATA_FILE):
