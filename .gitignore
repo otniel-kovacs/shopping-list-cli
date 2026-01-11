@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+.vscode/
+.idea/
+*.log
+*.csv
+.env
+.venv/
+data/shopping_list.json

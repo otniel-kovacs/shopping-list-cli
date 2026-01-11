@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+import json
+import os
+import sys
+
+DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "shopping_list.json")
+
+
+def load_items():
+    """Citește lista de articole din fișierul JSON. Dacă nu există, întoarce listă goală."""
+    if not os.path.exists(DATA_FILE):
+        return []
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            # Dacă fișierul e corupt, începem de la 0
+            return []
+
+
+def save_items(items):
+    """Salvează lista de articole în fișierul JSON."""
+    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(items, f, ensure_ascii=False, indent=2)
+
+
+def add_item(name, quantity, price, category):
+    """Adaugă un articol nou în lista de cumpărături, cu validări simple."""
+    # Validări
+    if quantity <= 0:
+        print("Eroare: cantitatea trebuie să fie > 0.")
+        return
+    if price < 0:
+        print("Eroare: prețul nu poate fi negativ.")
+        return
+    if not name.strip():
+        print("Eroare: numele nu poate fi gol.")
+        return
+
+    items = load_items()
+
+    item = {
+        "name": name,
+        "quantity": quantity,
+        "price": price,
+        "category": category
+    }
+    items.append(item)
+    save_items(items)
+
+    total_item = quantity * price
+    print(
+        f'Articol adăugat: {name} (cantitate: {quantity}, preț unitar: {price} RON, '
+        f'total: {total_item} RON, categorie: {category})'
+    )
+    print(f"Lista salvată în {DATA_FILE}")
+
+
+def list_items(sort_by=None):
+    """Listează articolele, opțional sortate după name/price/category."""
+    items = load_items()
+    if not items:
+        print("Lista de cumpărături este goală.")
+        return
+
+    if sort_by == "price":
+        items.sort(key=lambda x: x["price"])
+    elif sort_by == "name":
+        items.sort(key=lambda x: x["name"].lower())
+    elif sort_by == "category":
+        items.sort(key=lambda x: x["category"].lower())
+
+    print("Lista de cumpărături:")
+    for item in items:
+        total = item["quantity"] * item["price"]
+        print(
+            f'- {item["name"]}: {item["quantity"]} x {item["price"]} RON '
+            f'(total: {total} RON), categorie: {item["category"]}'
+        )
+
+
+def total_cost():
+    """Calculează costul total și subtotalurile pe categorii."""
+    items = load_items()
+    if not items:
+        print("Lista de cumpărături este goală.")
+        return
+
+    total = 0.0
+    by_category = {}
+
+    for item in items:
+        item_total = item["quantity"] * item["price"]
+        total += item_total
+        cat = item["category"]
+        by_category[cat] = by_category.get(cat, 0.0) + item_total
+
+    print(f"Cost total: {total} RON")
+    print("Subtotaluri pe categorii:")
+    for cat, value in by_category.items():
+        print(f"  - {cat}: {value} RON")
+
+
+def print_help():
+    """Afișează comenzile disponibile."""
+    print("Comenzi disponibile:")
+    print('  add "nume" cantitate pret "categorie"')
+    print('  remove "nume"                  (TODO)')
+    print('  list [--sort name|price|category]')
+    print('  search --category "categorie"  (TODO)')
+    print('  total')
+    print('  export nume_fisier.csv         (TODO)')
+    print('  help')
+
+
+def main():
+
+    if len(sys.argv) < 2:
+        print("Eroare: nu ai dat nicio comandă.")
+        print_help()
+        sys.exit(1)
+
+    command = sys.argv[1]
+
+    if command == "add":
+        # ./shopping_list add "mere" 5 2.5 "fructe"
+        if len(sys.argv) != 6:
+            print('Utilizare: ./shopping_list add "nume" cantitate pret "categorie"')
+            sys.exit(1)
+        name = sys.argv[2]
+        quantity = int(sys.argv[3])
+        price = float(sys.argv[4])
+        category = sys.argv[5]
+        add_item(name, quantity, price, category)
+
+    elif command == "list":
+        # ./shopping_list list --sort price
+        sort_by = None
+        if len(sys.argv) == 4 and sys.argv[2] == "--sort":
+            sort_by = sys.argv[3]
+        list_items(sort_by)
+
+    elif command == "total":
+        total_cost()
+
+    elif command == "help":
+        print_help()
+
+    else:
+        print(f"Comandă necunoscută: {command}")
+        print_help()
+
+
+if __name__ == "__main__":
+    main()
