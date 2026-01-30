@@ -16,8 +16,7 @@ def load_items():
             return json.load(f)
         except json.JSONDecodeError:
             # Dacă fișierul e corupt, începem de la 0
-            return []
-
+            return []# JSON invalid -> lista goala
 
 #functie pentru salvarea articolelor in fisier
 def save_items(items):
