@@ -74,7 +74,27 @@ def remove_item(name):
     save_items(items)
     print(f'Articolul "{name}" a fost șters cu succes.')
 
+def search_by_category(category):
+    """Afișează articolele dintr-o categorie."""
+    items = load_items()
+    if not items:
+        print("Lista de cumpărături este goală.")
+        return
 
+    cat = category.strip().lower()
+    found = [it for it in items if it["category"].strip().lower() == cat]
+
+    if not found:
+        print(f'Nu există articole în categoria "{category}".')
+        return
+
+    print(f'Articole în categoria "{category}":')
+    for item in found:
+        total = item["quantity"] * item["price"]
+        print(
+            f'- {item["name"]}: {item["quantity"]} x {item["price"]} RON '
+            f'(total: {total} RON)'
+        )
 
 
 def list_items(sort_by=None):
