@@ -6,6 +6,7 @@ import sys
 DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "shopping_list.json")
 
 
+
 #functie pentru incarcarea articolelor din fisier
 def load_items():
     """Citește lista de articole din fișierul JSON. Dacă nu există, întoarce listă goală."""
@@ -18,12 +19,18 @@ def load_items():
             # Dacă fișierul e corupt, începem de la 0
             return []# JSON invalid -> lista goala
 
+
+
+
 #functie pentru salvarea articolelor in fisier
 def save_items(items):
     """Salvează lista de articole în fișierul JSON."""
     os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False, indent=2)
+
+
+
 
 
 def add_item(name, quantity, price, category):
@@ -62,6 +69,8 @@ def add_item(name, quantity, price, category):
     print(f"Lista salvată în {DATA_FILE}")
     print("Articolul a fost adăugat și salvat cu succes.")
 
+
+
 def remove_item(name):
     """Sterge un articol dupa nume."""
     name = name.strip()
@@ -81,6 +90,9 @@ def remove_item(name):
 
     save_items(items)
     print(f'Articolul "{name}" a fost șters cu succes.')
+
+
+
 
 def search_by_category(category):
     """Afișează articolele dintr-o categorie."""
@@ -109,6 +121,9 @@ def search_by_category(category):
         )
 
 
+
+
+
 def export_csv(filename):
     """Exportă lista în fișier CSV."""
     items = load_items()
@@ -130,6 +145,10 @@ def export_csv(filename):
             writer.writerow([it["name"], it["quantity"], it["price"], it["category"], total])
 
     print(f"Export realizat: {filename}")
+
+
+
+
 
 def list_items(sort_by=None):
     """Listează articolele, opțional sortate după name/price/category."""
@@ -158,6 +177,10 @@ def list_items(sort_by=None):
         )
 
 
+
+
+
+
 def total_cost():
     """Calculează costul total și subtotalurile pe categorii."""
     items = load_items()
@@ -184,6 +207,10 @@ def total_cost():
         print(f"  - {cat}: {by_category[cat]:.2f} RON")
 
 
+
+
+
+
 def print_help():
     """Afișează comenzile disponibile."""
     print("Comenzi disponibile:")
@@ -194,6 +221,9 @@ def print_help():
     print('  total')
     print('  export nume_fisier.csv')
     print('  help')
+
+
+
 
 
 def main():
