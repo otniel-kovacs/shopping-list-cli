@@ -2,6 +2,7 @@
 import json
 import os
 import sys
+import csv
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "shopping_list.json")
 
@@ -73,7 +74,6 @@ def add_item(name, quantity, price, category):
 def remove_item(name):
     """Sterge un articol dupa nume."""
     name = name.strip()
-    category = category.strip()
 
     items = load_items()
     if not items:
@@ -81,7 +81,7 @@ def remove_item(name):
         return
     
     initial_len = len(items)
-    items= [it for it in items if it["name"].strip()lower() != name.strip().lower()]
+    items= [it for it in items if it["name"].strip().lower() != name.lower()]
 
     if len(items) == initial_len:
         print(f'Nu am găsit niciun articol cu numele "{name}".')
@@ -95,7 +95,6 @@ def remove_item(name):
 
 def search_by_category(category):
     """Afișează articolele dintr-o categorie."""
-    name = name.strip()
     category = category.strip()
 
 
@@ -251,6 +250,29 @@ def main():
         if len(sys.argv) == 4 and sys.argv[2] == "--sort":
             sort_by = sys.argv[3]
         list_items(sort_by)
+    elif command == "remove":
+        # ./shopping_list remove "nume"
+        if len(sys.argv) != 3:
+            print('Utilizare: ./shopping_list remove "nume"')
+            sys.exit(1)
+        name = sys.argv[2]
+        remove_item(name)           
+
+    elif command == "search":
+        # ./shopping_list search --category "categorie"
+        if len(sys.argv) != 4 or sys.argv[2] != "--category":
+            print('Utilizare: ./shopping_list search --category "categorie"')
+            sys.exit(1)
+        category = sys.argv[3]
+        search_by_category(category)
+
+    elif command == "export":
+        # ./shopping_list export nume_fisier.csv
+        if len(sys.argv) != 3:
+            print("Utilizare: ./shopping_list export nume_fisier.csv")
+            sys.exit(1)
+        filename = sys.argv[2]
+        export_csv(filename)
 
     elif command == "total":
         total_cost()
