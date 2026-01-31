@@ -164,11 +164,11 @@ def print_help():
     """Afișează comenzile disponibile."""
     print("Comenzi disponibile:")
     print('  add "nume" cantitate pret "categorie"')
-    print('  remove "nume"                  (TODO)')
+    print('  remove "nume"')
     print('  list [--sort name|price|category]')
-    print('  search --category "categorie"  (TODO)')
+    print('  search --category "categorie"')
     print('  total')
-    print('  export nume_fisier.csv         (TODO)')
+    print('  export nume_fisier.csv')
     print('  help')
 
 
