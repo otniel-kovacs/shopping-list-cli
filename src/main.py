@@ -60,6 +60,7 @@ def add_item(name, quantity, price, category):
         f'total: {total_item} RON, categorie: {category})'
     )
     print(f"Lista salvată în {DATA_FILE}")
+    print("Articolul a fost adăugat și salvat cu succes.")
 
 def remove_item(name):
     """Sterge un articol dupa nume."""
