@@ -17,7 +17,7 @@ def load_items():
             return json.load(f)
         except json.JSONDecodeError:
             # Dacă fișierul e corupt, începem de la 0
-            return []# JSON invalid -> lista goala
+            return []  # fișier JSON invalid → listă goală
 
 
 
