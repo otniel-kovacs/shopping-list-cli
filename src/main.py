@@ -169,7 +169,7 @@ def total_cost():
         cat = item["category"]
         by_category[cat] = by_category.get(cat, 0.0) + item_total
 
-    print(f"Cost total: {total} RON")
+    print(f"Cost total: {total:.2f} RON")
     print("Subtotaluri pe categorii:")
     for cat, value in by_category.items():
         print(f"  - {cat}: {value} RON")
