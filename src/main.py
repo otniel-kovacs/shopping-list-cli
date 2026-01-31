@@ -57,6 +57,25 @@ def add_item(name, quantity, price, category):
     )
     print(f"Lista salvată în {DATA_FILE}")
 
+def remove_item(name):
+    """Sterge un articol dupa nume."""
+    items = load_items()
+    if not items:
+        print("Lista de cumparaturi este goala.")
+        return
+    
+    initial_len = len(items)
+    items= [it for it in items if it["name"].strip()lower() != name.strip().lower()]
+
+    if len(items) == initial_len:
+        print(f'Nu am găsit niciun articol cu numele "{name}".')
+        return
+
+    save_items(items)
+    print(f'Articolul "{name}" a fost șters cu succes.')
+
+
+
 
 def list_items(sort_by=None):
     """Listează articolele, opțional sortate după name/price/category."""
