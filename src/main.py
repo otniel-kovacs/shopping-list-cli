@@ -161,8 +161,12 @@ def total_cost():
         return
 
     total = 0.0
+
+    # dicționar pentru sume pe fiecare categorie
     by_category = {}
 
+
+    # calculăm costul total și subtotalurile pe categorii
     for item in items:
         item_total = item["quantity"] * item["price"]
         total += item_total
