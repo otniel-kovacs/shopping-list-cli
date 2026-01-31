@@ -111,6 +111,10 @@ def search_by_category(category):
 def export_csv(filename):
     """Exportă lista în fișier CSV."""
     items = load_items()
+
+    if os.path.exists(filename):
+        print("Atenție: fișierul există și va fi suprascris.")
+
     if not items:
         print("Lista de cumpărături este goală.")
         return
