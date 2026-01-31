@@ -157,7 +157,7 @@ def total_cost():
     """Calculează costul total și subtotalurile pe categorii."""
     items = load_items()
     if not items:
-        print("Lista de cumpărături este goală.")
+        print("Lista de cumpărături este goală. Adaugă articole folosind comanda add.")
         return
 
     total = 0.0
