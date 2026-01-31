@@ -97,6 +97,24 @@ def search_by_category(category):
         )
 
 
+def export_csv(filename):
+    """Exportă lista în fișier CSV."""
+    items = load_items()
+    if not items:
+        print("Lista de cumpărături este goală.")
+        return
+
+    os.makedirs(os.path.dirname(filename) or ".", exist_ok=True)
+
+    with open(filename, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["name", "quantity", "price", "category", "total"])
+        for it in items:
+            total = it["quantity"] * it["price"]
+            writer.writerow([it["name"], it["quantity"], it["price"], it["category"], total])
+
+    print(f"Export realizat: {filename}")
+
 def list_items(sort_by=None):
     """Listează articolele, opțional sortate după name/price/category."""
     items = load_items()
