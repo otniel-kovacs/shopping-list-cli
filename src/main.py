@@ -39,15 +39,14 @@ def add_item(name, quantity, price, category):
     name = name.strip()
     category = category.strip()
 
-
     if quantity <= 0:
-        print("Eroare: cantitatea trebuie să fie > 0.")
+        print("[ERROR] Cantitatea trebuie să fie un număr întreg pozitiv.")
         return
     if price < 0:
-        print("Eroare: prețul nu poate fi negativ.")
+        print("[ERROR] Prețul nu poate fi negativ.")
         return
     if not name.strip():
-        print("Eroare: numele nu poate fi gol.")
+        print("[ERROR] Numele articolului nu poate fi gol.")
         return
 
     items = load_items()
