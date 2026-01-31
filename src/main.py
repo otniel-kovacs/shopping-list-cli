@@ -29,6 +29,10 @@ def save_items(items):
 def add_item(name, quantity, price, category):
     """Adaugă un articol nou în lista de cumpărături, cu validări simple."""
     # Validări
+    name = name.strip()
+    category = category.strip()
+
+
     if quantity <= 0:
         print("Eroare: cantitatea trebuie să fie > 0.")
         return
@@ -59,6 +63,9 @@ def add_item(name, quantity, price, category):
 
 def remove_item(name):
     """Sterge un articol dupa nume."""
+    name = name.strip()
+    category = category.strip()
+
     items = load_items()
     if not items:
         print("Lista de cumparaturi este goala.")
@@ -76,6 +83,10 @@ def remove_item(name):
 
 def search_by_category(category):
     """Afișează articolele dintr-o categorie."""
+    name = name.strip()
+    category = category.strip()
+
+
     items = load_items()
     if not items:
         print("Lista de cumpărături este goală.")
