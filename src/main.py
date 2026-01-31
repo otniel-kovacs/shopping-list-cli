@@ -139,6 +139,10 @@ def list_items(sort_by=None):
         items.sort(key=lambda x: x["name"].lower())
     elif sort_by == "category":
         items.sort(key=lambda x: x["category"].lower())
+    elif sort_by is not None:
+        print("Criteriu de sortare invalid, se afișează lista nesortată.")
+
+
 
     print("Lista de cumpărături:")
     for item in items:
