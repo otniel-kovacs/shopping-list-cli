@@ -28,4 +28,15 @@ python -python -m src.main add "lapte" 2 7.9 "lactate"
 python -m src.main list --sort price
 
 
+## Rulare cu Docker
+
+Imaginea Docker este disponibilă public pe Docker Hub:
+
+https://hub.docker.com/r/smithoty25/shopping-list-cli
+
+Rulare rapidă:
+
+```bash
+docker pull smithoty25/shopping-list-cli
+docker run --rm smithoty25/shopping-list-cli help
 
